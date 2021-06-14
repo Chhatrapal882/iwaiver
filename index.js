@@ -6,9 +6,11 @@ require('dotenv').config();
 
 //app
 const app = express();
+
 //import routes
 const authRoutes = require('./routes/auth');
-const { db } = require('./models/User');
+const Waivers = require('./routes/waiver')
+// const { db } = require('./models/User');
 
 
 // db
@@ -26,7 +28,7 @@ app.use(cors())
 
 //routes middleware
 app.use('/api', authRoutes);
-
+app.use('/api/waiver', Waivers  );
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
