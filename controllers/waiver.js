@@ -24,8 +24,10 @@ exports.addwaiver = (req, res) => {
       waiver.save().then(response=>{
             res.json({msg:response})
       })
+}
 
-  
-    
-
+exports.getwaiver = (req,res) =>{
+    Waiver.find().then(waiver=>{
+        res.json({msg:waiver})
+    })      
 }
