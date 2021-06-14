@@ -1,20 +1,35 @@
-const mongoose = require('mongoose')
-var express = require('express')
-const router = require('./src/routes/user')
-const cors = require('cors') 
-var app = express()
-app.use(cors())
-app.use(express.json())
-const db = "mongodb://localhost:27017/waiver"
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+require('dotenv').config();
+
+//app
+const app = express();
+//import routes
+const authRoutes = require('./routes/auth');
+const { db } = require('./models/User');
+
+
+// db
 mongoose.connect(
-    db,{
+    process.env.DATABASE,{
         useNewUrlParser:true,
         useUnifiedTopology:true,
         useNewUrlParser:true
     }).then(()=>console.log('db is connected')).catch((err)=>console.log(err))
+  
     
-    app.use('/api', router)
-    
+//middlewares
+app.use(bodyParser.json());
+app.use(cors())
 
-const port = 3001
-app.listen(port,()=>console.log(`server is running on ${port}`))
+//routes middleware
+app.use('/api', authRoutes);
+
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
+    console.log(`Server is running on ${port}`)
+  });
+
