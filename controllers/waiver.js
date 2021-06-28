@@ -25,7 +25,6 @@ exports.addwaiver = (req, res) => {
             res.json({msg:response})
       })
 }
-
 exports.getwaiver = (req,res) =>{
     Waiver.find().then(waiver=>{
         res.json({msg:waiver})

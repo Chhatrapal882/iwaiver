@@ -8,4 +8,5 @@ exports.createJWT = (email, userId, duration) => {
    return jwt.sign(payload, process.env.TOKEN_SECRET, {
      expiresIn: duration,
    });
+      
 };

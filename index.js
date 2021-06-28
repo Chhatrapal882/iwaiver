@@ -2,16 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 require('dotenv').config();
 
 //app
 const app = express();
-
-//import routes
-const authRoutes = require('./routes/auth');
-const Waivers = require('./routes/waiver')
-// const { db } = require('./models/User');
-
 
 // db
 mongoose.connect(
@@ -24,11 +19,17 @@ mongoose.connect(
     
 //middlewares
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+
+//import routes
+app.use(cookieParser())
+const authRoutes = require('./routes/auth');
+const Waivers = require('./routes/waiver')
+// const { db } = require('./models/User');
 
 //routes middleware
 app.use('/api', authRoutes);
-app.use('/api/waiver', Waivers  );
+app.use('/api/waiver', Waivers);
 const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
